@@ -14,7 +14,7 @@ application:
               WF_DOMAIN: $WORKFRONT_API_URL
               WF_DEFAULT_VERSION: $WORKFRONT_API_VERSION
               AEM_ALLOWED_HOSTS: $AEM_ALLOWED_HOSTS
-              ALLOWED_IMS_ORG_ID: 523BF0605768FF0E7F000101@AdobeOrg
+              ALLOWED_IMS_ORG_ID: $ALLOWED_IMS_ORG_ID
             annotations:
               require-adobe-auth: false
               raw-http: true
