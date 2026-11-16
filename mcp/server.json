@@ -1,0 +1,27 @@
+{
+  "$schema": "https://static.modelcontextprotocol.io/schemas/2025-09-29/server.schema.json",
+  "name": "com.adobe.ags489/workfront-aem-link",
+  "title": "Workfront AEM Asset Linker",
+  "description": "Link AEM assets to Workfront projects, tasks and issues as native AEM-linked documents.",
+  "version": "2.0.0",
+  "remotes": [
+    {
+      "type": "streamable-http",
+      "url": "https://31876-766magentabandicoot.adobeioruntime.net/api/v1/web/commerce-mcp-app/workfront-mcp",
+      "headers": [
+        {
+          "name": "Authorization",
+          "description": "Bearer <IMS access token> of the signed-in Experience Cloud user (client_id exc_app). Forwarded to AEM and Workfront.",
+          "isRequired": true,
+          "isSecret": true
+        },
+        {
+          "name": "x-gw-ims-org-id",
+          "description": "IMS organization the caller belongs to.",
+          "value": "523BF0605768FF0E7F000101@AdobeOrg",
+          "isRequired": true
+        }
+      ]
+    }
+  ]
+}

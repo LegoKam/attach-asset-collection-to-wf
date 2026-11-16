@@ -1,0 +1,102 @@
+{
+  "name": "workfront-aem-link",
+  "displayName": "Workfront AEM Asset Linker",
+  "description": "Links AEM assets to Workfront projects, tasks and issues as native AEM-linked documents (same result as Add documents > AEM in Workfront). Idempotent per asset and object.",
+  "imsOrgId": "523BF0605768FF0E7F000101@AdobeOrg",
+  "transport": {
+    "type": "streamable-http",
+    "url": "https://31876-766magentabandicoot.adobeioruntime.net/api/v1/web/commerce-mcp-app/workfront-mcp",
+    "method": "POST",
+    "protocolVersion": "2024-11-05",
+    "sessions": false,
+    "serverSentEvents": false
+  },
+  "authentication": {
+    "type": "user-token-passthrough",
+    "header": "Authorization",
+    "format": "Bearer {user_ims_access_token}",
+    "tokenRequirements": "Signed-in user IMS access token issued to client_id exc_app. Tokens from aio CLI or server-to-server credentials are rejected by AEM.",
+    "additionalHeaders": {
+      "x-gw-ims-org-id": "523BF0605768FF0E7F000101@AdobeOrg"
+    }
+  },
+  "serverValidation": [
+    "Token validated against IMS (/ims/validate_token/v1)",
+    "Caller must belong to 523BF0605768FF0E7F000101@AdobeOrg",
+    "Token forwarded only to allowlisted AEM author hosts and the configured Workfront host"
+  ],
+  "backends": {
+    "workfront": "https://ags489-06032401.testdrive.workfront.adobe.com",
+    "aemAuthorHosts": [
+      "author-p152232-e2390229.adobeaemcloud.com"
+    ]
+  },
+  "defaults": {
+    "documentProviderID": "6af661ac000499833c1abe24889db97b",
+    "documentProviderName": "AEM STE Author",
+    "aemHost": "author-p152232-e2390229.adobeaemcloud.com"
+  },
+  "tools": [
+    {
+      "description": "Link an AEM asset to a Workfront object (project/task/issue) as a NATIVE AEM-linked document, like \"Add documents > AEM Author\" in the UI. Resolves the asset UUID in AEM, builds the Workfront external storage handle, and creates the document via POST /document. Idempotent: if the asset is already linked, returns the existing document.",
+      "inputSchema": {
+        "additionalProperties": false,
+        "properties": {
+          "aemHost": {
+            "description": "AEM author host, e.g. author-p1-e2.adobeaemcloud.com (no scheme).",
+            "type": "string"
+          },
+          "assetPath": {
+            "description": "DAM asset path, e.g. /content/dam/.../camp-alaska.jpg",
+            "pattern": "^/content/dam/",
+            "type": "string"
+          },
+          "docObjCode": {
+            "enum": [
+              "PROJ",
+              "TASK",
+              "OPTASK"
+            ],
+            "type": "string"
+          },
+          "documentProviderID": {
+            "description": "Workfront AEM document provider ID.",
+            "pattern": "^[a-f0-9]{32}$",
+            "type": "string"
+          },
+          "name": {
+            "description": "Display name for the linked document.",
+            "maxLength": 255,
+            "minLength": 1,
+            "type": "string"
+          },
+          "objID": {
+            "pattern": "^[a-f0-9]{32}$",
+            "type": "string"
+          },
+          "version": {
+            "default": "20.0",
+            "pattern": "^\\d+\\.\\d+$",
+            "type": "string"
+          }
+        },
+        "required": [
+          "name",
+          "aemHost",
+          "assetPath",
+          "docObjCode",
+          "objID",
+          "documentProviderID"
+        ],
+        "type": "object"
+      },
+      "name": "workfront_link_aem_document"
+    }
+  ],
+  "appBuilder": {
+    "project": "766MagentaBandicoot (Workfront Ext Doc Linker App)",
+    "consoleOrgId": "31876",
+    "workspace": "Production",
+    "runtimeAction": "commerce-mcp-app/workfront-mcp"
+  }
+}

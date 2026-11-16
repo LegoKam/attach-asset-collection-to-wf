@@ -1,0 +1,21 @@
+application:
+  actions: actions
+  runtimeManifest:
+    packages:
+      commerce-mcp-app:
+        license: Apache-2.0
+        actions:
+          workfront-mcp:
+            function: actions/workfront-mcp/index.js
+            web: 'yes'
+            runtime: nodejs:22
+            inputs:
+              LOG_LEVEL: info
+              WF_DOMAIN: $WORKFRONT_API_URL
+              WF_DEFAULT_VERSION: $WORKFRONT_API_VERSION
+              AEM_ALLOWED_HOSTS: $AEM_ALLOWED_HOSTS
+              ALLOWED_IMS_ORG_ID: 523BF0605768FF0E7F000101@AdobeOrg
+            annotations:
+              require-adobe-auth: false
+              raw-http: true
+              final: true

@@ -1,0 +1,21 @@
+{
+  "mcpServers": {
+    "commerce-extensibility": {
+      "command": "npx",
+      "args": [
+        "-y",
+        "@adobe-commerce/commerce-extensibility-tools@3.6.0"
+      ],
+      "env": {
+        "NODE_ENV": "production"
+      }
+    },
+    "workfront-mcp": {
+      "url": "https://31876-766magentabandicoot.adobeioruntime.net/api/v1/web/commerce-mcp-app/workfront-mcp",
+      "headers": {
+        "Authorization": "Bearer ${env:WORKFRONT_MCP_IMS_TOKEN}",
+        "x-gw-ims-org-id": "523BF0605768FF0E7F000101@AdobeOrg"
+      }
+    }
+  }
+}
